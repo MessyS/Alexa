@@ -21,10 +21,11 @@ play_ok = 'music_messy/prompt/as_you_wish.wav'
 def main(p,detector):
 	# 该条代码很重要
 	# 因为snowboy已经在内部使用pyaudio库获取了MIC的权限
-	# 如果这时在手动调用pyaudio，只会造成两种情况
+	# 如果这时在手动调用pyaudio，会造成三种情况
 	#
-	# 一：系统直接提示未知的媒体设备（也就是没有驱动）
-	# 二：snowboy程序被挤掉，系统提示无媒体设备
+        # 一：录下来的文件没有声音
+        # 二：系统直接提示未知的媒体设备（Device unavailable）
+        # 三：snowboy程序被挤掉，系统提示无媒体设备（No available audio device）
 	#
 	# 这个函数是在snowboydecoder.py文件中定义的，
 	# 是官方的结束程序占用媒体设备的函数，
