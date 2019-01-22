@@ -10,6 +10,7 @@ def main():
 	print('     ##               本程序基于snowboy、讯飞、图灵               ##')
 	print('     ##                  主程序由Messy进行编写                    ##')
 	print('     ##               适用于个人进行定制智能家居技能              ##')
+	print('     ##          GIT项目地址：https://github.com/MessyS/Alexa     ##')
 	print('     ##                                                           ##')
 	print('     ##             欢迎加入 qq群:576072252 进行相关讨论          ##')
 	print('     ##                                                           ##')

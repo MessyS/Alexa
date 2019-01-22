@@ -1,67 +1,54 @@
 import os,time,threading
-import logs
+import logs,volume
+
+play_ok = 'music_messy/prompt/as_you_wish.wav'
+play_go = 'music_messy/prompt/end.wav'
+play_back = 'music_messy/prompt/start.wav'
+play_read_temper = 'music_messy/prompt/read_temper.wav'
 
 send_433 = '/opt/MessyPi/led/433codesend'
 send_315 = '/opt/MessyPi/led/315codesend'
 
 code_433 = {
-	'open':'xxxxxxxxxx',
-	'down':'xxxxxxxxxx'
+	'open':'1775188',
+	'down':'1775192'
 }
 
 code_315_1 = {
-	'open':'xxxxxxxxxx',
-	'down':'xxxxxxxxxx'
+	'open':'4285906',
+	'down':'4285912'
 }
 
 code_315_2 = {
-	'open':'xxxxxxxxxx',
-	'down':'xxxxxxxxxx',
-	'down_60s':'xxxxxxxxxx',
-	'down_5min':'xxxxxxxxxx'
+	'open':'12467521',
+	'down':'12467528',
+	'down_60s':'12467552',
+	'down_5min':'12467522'
 }
 
-def light_433(text):
-	if str(text).find('开灯') != -1:
-		os.system(send_433 + ' ' + code_433['open'])
-		logs.suc('    i_said:开灯')
-		return 'light_ok'
-	elif str(text).find('关灯') != -1:
-		os.system(send_433 + ' ' + code_433['down'])
-		logs.suc('    i_said:关灯')
-		return 'light_ok'
-	else:
-		return True
+def light_433(action):
+	print(action)
+	os.system(send_433 + ' ' + code_433[action])
+	volume.play_prompt(play_ok)
+	return 'ok'
 
-def temperature(text):
-	if str(text).find('温度') != -1:
-		text = os.popen('python3 /opt/MessyPi/wendu/test_one.py').read()
-		return text
-	else:
-		return True
+def temperature():
+	volume.play_prompt(play_read_temper)
+	text = os.popen('python3 /opt/MessyPi/wendu/test_one.py').read()
+	return text
 
 def setTimeOut_down():
 	time.sleep(360)
 	os.system(send_433 + ' ' + code_433['down'])
 
-def SE(text):
-	if str(text).find('我回来了') != -1:
+def SE(bool):
+	if bool == 0:
+		volume.play_prompt(play_back)
 		print('       Messy，祝你有个愉快的一天！')
-		logs.suc('    i_said:我回来了')
-		return 'back'
-	elif str(text).find('我走了') != -1:
+		logs.suc('i_said:我回来了')
+	elif bool == 1:
+		volume.play_prompt(play_go)
 		print('       将在五分钟后切断相应设备电源并开启监控模式，晚安！')
-		logs.suc('    i_said:我走了')
+		logs.suc('i_said:我走了')
 		t = threading.Thread(target=setTimeOut_down)
 		t.start()
-		return 'go'
-	else:
-		return True
-		
-def check(text):
-	check_list = [light_433(text),temperature(text),SE(text)]
-	for i in check_list:
-		if i != 1:
-			return i
-			os._exit()
-	return True
