@@ -64,6 +64,8 @@ if __name__ == '__main__':
 		print('\n     更多信息请查阅logs/error.log')
 		print('\n———————————————————————————————————————————————————————————————————————————————————————\n')
 	finally:
+		p.terminate()
+		print('\n \033[1;35m     PyAudio已关闭！ \033[0m')
+		detector.terminate()
+		print('\n \033[1;35m     snowboy模块已关闭！ \033[0m')
 		print('\n \033[1;34m     程序主循环退出! \033[0m \n')
-		p.terminate() # 关闭pyaudio
-		detector.terminate() # 关闭snowboy
