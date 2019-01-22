@@ -17,6 +17,16 @@ play_hecheng_failed = 'music_messy/prompt/hecheng_failed.wav'
 i_said = 'music_messy/said/i_said.wav'
 alexa_said = 'music_messy/said/alexa_said.wav'
 
+# 语音识别引擎（可选）
+# 百度    baidu
+# 讯飞    xunfei
+shibie_tts = 'baidu'
+
+# 语音合成引擎（可选）
+# 百度    baidu
+# 讯飞    xunfei
+hecheng_tts = 'xunfei'
+
 def main(p,detector):
 	detector.terminate()
 	print('\033[1;32m     识别成功，随便说说吧! \033[0m')
@@ -25,17 +35,26 @@ def main(p,detector):
 	# 录音
 	volume_in = volume.volume(p)
 	# 语音识别
-	i_said_json = yuyinshibie.shibie(i_said)
-	# 判断是否识别成功
-	if int(i_said_json['code']) == 0:
-		i_said_text = i_said_json['data']
-		#print('      ' + i_said_text)
+	i_said_json = eval('yuyinshibie.' + shibie_tts + '(i_said)')
+	# 判断是否识别成功(这里我本来想直接用变量的，但不知道为什么第二个if的赋值赋不出来，就先用数组代替)
+	shibie_suc = []
+	if shibie_tts == 'baidu':
+		if int(i_said_json['err_no']) == 0:
+			shibie_suc.append('1')
+	elif shibie_tts == 'xunfei':
+		if int(i_said_json['code']) == 0:
+			shibie_suc.append('1','2')
+	if len(shibie_suc) == 1 or len(shibie_suc) == 2:
 		# 判断有无声源输入
+		if len(shibie_suc) == 1:
+			i_said_text = i_said_json['result'][0]
+		elif len(shibie_suc) == 2:
+			i_said_text = i_said_json['data']
 		if i_said_text == '':
-			volume.play_prompt(none_prompt)
+				volume.play_prompt(none_prompt)
 		else:
 			keyword = isKeyword.main_1(i_said_text)
-			hecheng_keyword = isKeyword.main_2(i_said_text)
+			hecheng_keyword = isKeyword.main_2(i_said_text,hecheng_tts)
 			# 判断是否包含控制家具关键字
 			if keyword==1 and hecheng_keyword==1:
 				alexa_said_text = tuling.robot(i_said_text)
@@ -43,11 +62,11 @@ def main(p,detector):
 				# 把我和alexa的对话记录到日志
 				logs.suc('i_said' + i_said_text + '\n    alexa_said:' + alexa_said_text)				
 				# 语音合成阶段的错误处理
-				hecheng = yuyinhecheng.hecheng(alexa_said_text)
+				hecheng = eval('yuyinshibie.' + hecheng_tts + '(alexa_said_text)')
 				if hecheng == 1:
 					volume.play_prompt(alexa_said)
 				else:
 					volume.play_prompt(play_hecheng_failed)
 	else:
-		print('语音识别发生了错误，错误码为:', i_said_json['code'], '错误原因为:', i_said_json['desc'])
+		print('语音识别发生了错误，以下是具体信息:\n', i_said_json)
 		volume.play_prompt(play_shibie_failed)

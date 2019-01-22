@@ -4,10 +4,18 @@ import time
 import hashlib
 import urllib.request
 import urllib.parse
+from aip import AipSpeech
 
+# 百度
+app_id = 'xxxxxxxxx'
+api_key = 'xxxxxxxxx'
+sceret_key = 'xxxxxxxxx'
+client = AipSpeech(app_id, api_key, sceret_key)
+
+# 讯飞
 api_url = "http://api.xfyun.cn/v1/service/v1/tts"
-API_KEY = "xxxxxxxxxx"
-APP_ID = "xxxxxxxxxx"
+API_KEY = 'xxxxxxxxx'
+APP_ID = 'xxxxxxxxx'
 
 #合成音频输出文件路径
 OUTPUT_FILE = "music_messy/said/alexa_said.wav"
@@ -41,7 +49,7 @@ header = {
 }
 
 # 发送HTTP POST请求
-def hecheng(text):
+def xunfei(text):
 	# 构造HTTP请求Body
 	body = {
 		"text": text
@@ -63,4 +71,14 @@ def hecheng(text):
 	else:
 		hecheng = response.read().decode('utf8')
 		print(hecheng)
+		return False
+
+def baidu(text):
+	result = client.synthesis(text=text, options={'vol':5})
+	if not isinstance(result,dict):
+		with open(OUTPUT_FILE,'wb') as f:
+			f.write(result)
+		return True
+	else:
+		print(result)
 		return False
