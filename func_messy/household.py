@@ -10,20 +10,20 @@ send_433 = '/opt/MessyPi/led/433codesend'
 send_315 = '/opt/MessyPi/led/315codesend'
 
 code_433 = {
-	'open':'1775188',
-	'down':'1775192'
+	'open':'xxxxxxxx',
+	'down':'xxxxxxxx'
 }
 
 code_315_1 = {
-	'open':'4285906',
-	'down':'4285912'
+	'open':'xxxxxxxx',
+	'down':'xxxxxxxx'
 }
 
 code_315_2 = {
-	'open':'12467521',
-	'down':'12467528',
-	'down_60s':'12467552',
-	'down_5min':'12467522'
+	'open':'xxxxxxxx',
+	'down':'xxxxxxxx',
+	'down_60s':'xxxxxxxxx',
+	'down_5min':'xxxxxxxx'
 }
 
 def light_433(action):
