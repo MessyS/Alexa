@@ -13,6 +13,6 @@ def err():
 	return text
 	
 def suc(text):
-	logs_text = '[ ' + now_time + ' ] ' + str(text) + '\n\n'
+	logs_text = '[ ' + now_time + ' ]\n    ' + str(text) + '\n\n'
 	with open(suc_file,'a') as f:
 		f.write(logs_text)
