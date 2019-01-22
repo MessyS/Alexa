@@ -16,7 +16,7 @@ url = 'http://api.xfyun.cn/v1/service/v1/iat'
 api_key = 'xxxxxxxxx'
 x_appid = 'xxxxxxxxx'
  
-def shibie(file):
+def xunfei(file):
 	f = open(file, 'rb')
 	file_content = f.read()
 	base64_audio = base64.b64encode(file_content)
