@@ -3,8 +3,8 @@
 ### Alexa——定制化自己的智能家居控制中心
 >所需环境
 
-`pip install swig3.0
-apt -y install sox pyaudio libatlas-base-dev`
+* swig3.0(pip)
+* sox pyaudio libatlas-base-dev(apt)
 
 >支持的语言引擎
 
