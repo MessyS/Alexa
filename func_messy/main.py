@@ -62,7 +62,7 @@ def main(p,detector):
 				# 把我和alexa的对话记录到日志
 				logs.suc('i_said' + i_said_text + '\n    alexa_said:' + alexa_said_text)				
 				# 语音合成阶段的错误处理
-				hecheng = eval('yuyinshibie.' + hecheng_tts + '(alexa_said_text)')
+				hecheng = eval('yuyinhecheng.' + hecheng_tts + '(alexa_said_text)')
 				if hecheng == 1:
 					volume.play_prompt(alexa_said)
 				else:
