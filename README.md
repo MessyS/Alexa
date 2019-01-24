@@ -17,6 +17,6 @@
 
 **注：**
 * 启动命令：`python3 alexa.py music_messy/model/alea.umdl`
-* 如需把程序加到自启目录下,需手动吧音频文件的路径改为绝对路径
+* 如需把程序加到自启文件,需手动把`func_messy`目录下py文件里的所有音频文件的路径改为绝对路径
 
 若有兴趣获知我是如何开发的：详细教程位于[CSDN -- Messy的小博客~~~](https://blog.csdn.net/qq_41082014/article/details/86568114)
